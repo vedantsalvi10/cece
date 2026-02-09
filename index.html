@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Will you be my Valentine?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page">
+    <!-- Background anime characters: add images/nami.png, robin.png, chopper.png to show them -->
+    <div class="bg-characters" aria-hidden="true">
+      <img src="images/nami.png" alt="" class="bg-char bg-char-nami" onerror="this.style.display='none'">
+      <img src="images/robin.png" alt="" class="bg-char bg-char-robin" onerror="this.style.display='none'">
+      <img src="images/chopper.png" alt="" class="bg-char bg-char-chopper" onerror="this.style.display='none'">
+    </div>
+    <!-- Floating hearts background -->
+    <div class="hearts-bg" aria-hidden="true">
+      <span class="heart-bg"></span>
+      <span class="heart-bg"></span>
+      <span class="heart-bg"></span>
+      <span class="heart-bg"></span>
+      <span class="heart-bg"></span>
+    </div>
+
+    <!-- Single scene: envelope + card slot above -->
+    <section class="view view-envelope active" id="view-envelope">
+      <div class="envelope-wrapper">
+        <p class="tap-hint" id="tap-hint">Tap the envelope to open</p>
+
+        <!-- Card slot: question, celebration, or reconfirm (card appears above envelope) -->
+        <div class="card-slot" id="card-slot">
+          <div class="card-card card-question" id="card-question">
+            <p class="question">Even though it has just been one magical date, will you be my valentine?</p>
+            <div class="buttons">
+              <button type="button" class="btn btn-yes" id="btn-yes">Yes</button>
+              <button type="button" class="btn btn-no" id="btn-no">No</button>
+            </div>
+          </div>
+          <div class="card-card card-yes" id="card-yes">
+            <div class="celebration-hearts" aria-hidden="true">
+              <span class="celeb-heart"></span>
+              <span class="celeb-heart"></span>
+              <span class="celeb-heart"></span>
+              <span class="celeb-heart"></span>
+              <span class="celeb-heart"></span>
+            </div>
+            <div class="yes-content">
+              <img
+                class="dance-gif"
+                src="https://media.giphy.com/media/1esrGvhDzAjyXr8I5X/giphy.gif"
+                alt="Happy anime character dancing"
+                width="280"
+                height="280"
+              >
+              <p class="yes-message">You made me the happiest there is</p>
+            </div>
+          </div>
+          <div class="card-card card-no" id="card-no">
+            <span class="sad-emoji" aria-hidden="true">🥺</span>
+            <p class="no-message">Really? My heart skipped a beat…</p>
+            <p class="no-sub">Sure you don't want to change your mind?</p>
+            <div class="buttons">
+              <button type="button" class="btn btn-yes" id="btn-yes-reconfirm">Yes</button>
+              <button type="button" class="btn btn-no" id="btn-no-reconfirm">No</button>
+            </div>
+            <p class="no-final hidden" id="no-final">I'll always be here when you're ready 💕</p>
+          </div>
+        </div>
+
+        <!-- Envelope only (no letter inside) -->
+        <div class="envelope" id="envelope">
+          <div class="envelope-body"></div>
+          <div class="envelope-front"></div>
+          <div class="flap">
+            <span class="seal" aria-hidden="true">♥</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- Background music: local audio/happy.mp3 and audio/sad.mp3; fallback URLs if missing -->
+  <audio id="audio-happy" loop preload="auto" aria-label="Happy background music">
+    <source src="audio/happy.mp3" type="audio/mpeg">
+    <source id="audio-happy-fallback" src="https://www.jplayer.org/audio/mp3/Miaow-01.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="audio-sad" loop preload="auto" aria-label="Sad background music">
+    <source src="audio/sad.mp3" type="audio/mpeg">
+    <source id="audio-sad-fallback" src="https://www.jplayer.org/audio/mp3/Miaow-07-bubble.mp3" type="audio/mpeg">
+  </audio>
+  <script src="script.js"></script>
+</body>
+</html>

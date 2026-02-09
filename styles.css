@@ -1,0 +1,552 @@
+/* Valentine One-Page - Variables & base */
+:root {
+  --pink-light: #ffb6c1;
+  --pink: #ff69b4;
+  --pink-deep: #e91e8c;
+  --red-soft: #ff8a80;
+  --red-valentine: #c2185b;
+  --cream: #fff5f8;
+  --white: #fff;
+  --gray-soft: #b0bec5;
+  --gray: #78909c;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  --shadow-strong: 0 8px 32px rgba(0, 0, 0, 0.2);
+  --radius: 8px;
+  --env-radius: 6px;
+  --font-script: "Dancing Script", cursive;
+  --font-sans: "Quicksand", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  background: linear-gradient(160deg, var(--cream) 0%, var(--pink-light) 35%, var(--pink) 70%, var(--red-soft) 100%);
+  background-attachment: fixed;
+  color: #333;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  overflow-x: hidden;
+}
+
+.page {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* Background anime characters (Nami, Robin, Chopper) */
+.bg-characters {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bg-char {
+  position: absolute;
+  object-fit: contain;
+  opacity: 0.22;
+  filter: brightness(1.05);
+  z-index: 0;
+}
+
+.bg-char-nami {
+  left: 2%;
+  bottom: 8%;
+  width: clamp(100px, 18vw, 200px);
+  height: auto;
+  transform: scaleX(-1);
+}
+
+.bg-char-robin {
+  right: 2%;
+  bottom: 5%;
+  width: clamp(100px, 18vw, 200px);
+  height: auto;
+}
+
+.bg-char-chopper {
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 2%;
+  width: clamp(80px, 14vw, 160px);
+  height: auto;
+  opacity: 0.2;
+}
+
+@media (max-width: 600px) {
+  .bg-char-nami,
+  .bg-char-robin {
+    width: clamp(70px, 22vw, 120px);
+  }
+  .bg-char-chopper {
+    width: clamp(60px, 18vw, 100px);
+  }
+}
+
+/* Background floating hearts */
+.hearts-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.heart-bg {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--pink);
+  opacity: 0.2;
+  transform: rotate(-45deg);
+  animation: floatUp 15s ease-in-out infinite;
+}
+
+.heart-bg::before,
+.heart-bg::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--pink);
+  border-radius: 50%;
+}
+
+.heart-bg::before {
+  top: -6px;
+  left: 0;
+}
+
+.heart-bg::after {
+  left: -6px;
+  top: 0;
+}
+
+.heart-bg:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 12s; }
+.heart-bg:nth-child(2) { left: 25%; animation-delay: 2s; animation-duration: 14s; }
+.heart-bg:nth-child(3) { left: 50%; animation-delay: 1s; animation-duration: 16s; }
+.heart-bg:nth-child(4) { left: 75%; animation-delay: 3s; animation-duration: 13s; }
+.heart-bg:nth-child(5) { left: 90%; animation-delay: 1.5s; animation-duration: 15s; }
+
+@keyframes floatUp {
+  0% {
+    transform: rotate(-45deg) translateY(100vh) scale(0.6);
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: rotate(-45deg) translateY(-100px) scale(0.6);
+    opacity: 0;
+  }
+}
+
+/* Single view */
+.view {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 560px;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Envelope wrapper: card slot first (above), then envelope */
+.envelope-wrapper {
+  width: 100%;
+  max-width: min(92vw, 520px);
+  min-height: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}
+
+.tap-hint {
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem;
+  font-family: var(--font-sans);
+  transition: opacity 0.3s ease;
+}
+
+.tap-hint.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Card slot: appears above envelope when open */
+.card-slot {
+  width: 100%;
+  max-width: min(92vw, 420px);
+  margin-bottom: 1rem;
+  min-height: 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, opacity 0.4s ease, margin 0.4s ease;
+}
+
+.card-slot.visible {
+  max-height: 600px;
+  opacity: 1;
+  min-height: 120px;
+}
+
+.card-slot.card-out {
+  animation: cardComeOut 0.5s ease forwards;
+}
+
+@keyframes cardComeOut {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-card {
+  display: none;
+  background: linear-gradient(180deg, #fffafc 0%, var(--cream) 100%);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(0, 0, 0, 0.06);
+  padding: clamp(1rem, 4vw, 1.5rem);
+  width: 100%;
+}
+
+.card-card.active {
+  display: block;
+}
+
+.card-question .question {
+  font-family: var(--font-script);
+  font-size: clamp(1.1rem, 4vw, 1.5rem);
+  line-height: 1.45;
+  text-align: center;
+  margin: 0 0 1.25rem;
+  color: #333;
+}
+
+.card-question .buttons,
+.card-no .buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Envelope – real envelope look: body, front, triangular flap, seal */
+.envelope {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  cursor: pointer;
+  /* Envelope aspect: wider rectangle like a real envelope */
+  height: 0;
+  padding-bottom: 68%;
+}
+
+.envelope-body {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #8e1242 0%, #9c1449 25%, #b71c5c 70%, var(--red-valentine) 100%);
+  border-radius: 4px;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  z-index: 1;
+}
+
+.envelope-front {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 50%;
+  background: linear-gradient(180deg, #9c1449 0%, var(--red-valentine) 100%);
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  z-index: 2;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 55%, 0 100%);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.envelope .flap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 0;
+  border-style: solid;
+  border-width: 0 50% 36% 50%;
+  border-color: transparent transparent #7a0f38 transparent;
+  transform-origin: 50% 100%;
+  transition: transform 0.5s ease, z-index 0.5s;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.envelope .flap .seal {
+  position: absolute;
+  left: 50%;
+  bottom: -18%;
+  transform: translate(-50%, 50%);
+  width: 28px;
+  height: 28px;
+  background: radial-gradient(circle at 30% 30%, #d32f2f, #b71c1c);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.envelope.open .flap {
+  transform: rotateX(-175deg);
+  z-index: 1;
+}
+
+/* Buttons */
+.btn {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 3vw, 1.15rem);
+  font-weight: 600;
+  padding: 0.65em 1.5em;
+  min-height: 44px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--pink-deep);
+  outline-offset: 2px;
+}
+
+.btn-yes {
+  background: linear-gradient(135deg, var(--pink) 0%, var(--red-valentine) 100%);
+  color: var(--white);
+  box-shadow: 0 4px 14px rgba(194, 24, 91, 0.4);
+}
+
+.btn-yes:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(194, 24, 91, 0.5);
+}
+
+.btn-no {
+  background: var(--white);
+  color: var(--gray);
+  border: 2px solid var(--gray-soft);
+}
+
+.btn-no:hover {
+  transform: scale(1.03);
+  border-color: var(--gray);
+  color: #555;
+}
+
+/* Card slot – celebration (card-yes) */
+.card-yes {
+  position: relative;
+}
+
+.card-yes .yes-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.card-yes .dance-gif {
+  max-width: 100%;
+  width: min(280px, 85vw);
+  height: auto;
+  max-height: 50vh;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  object-fit: contain;
+}
+
+.card-yes .yes-message {
+  font-family: var(--font-script);
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  color: var(--red-valentine);
+  margin: 1.25rem 0 0;
+  font-weight: 600;
+}
+
+/* Celebration hearts inside card-yes */
+.card-yes .celebration-hearts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: var(--radius);
+}
+
+/* Card slot – reconfirm (card-no) */
+.card-no {
+  text-align: center;
+}
+
+.card-no .sad-emoji {
+  font-size: clamp(4rem, 15vw, 6rem);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.card-no .no-message {
+  font-family: var(--font-script);
+  font-size: clamp(1.35rem, 4.5vw, 1.75rem);
+  color: #333;
+  margin: 0;
+}
+
+.card-no .no-sub {
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  color: var(--gray);
+  margin: 0.5rem 0 1.25rem;
+}
+
+.card-no .no-final {
+  margin-top: 1rem;
+  font-size: clamp(1rem, 3vw, 1.1rem);
+  color: var(--pink-deep);
+}
+
+.card-no .no-final.hidden {
+  display: none;
+}
+
+/* Celebration hearts (shared) */
+.celebration-hearts {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.celeb-heart {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: var(--pink);
+  transform: rotate(-45deg);
+  animation: celebFloat 4s ease-in-out infinite;
+  opacity: 0.9;
+}
+
+.celeb-heart::before,
+.celeb-heart::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: var(--pink);
+  border-radius: 50%;
+}
+
+.celeb-heart::before {
+  top: -8px;
+  left: 0;
+}
+
+.celeb-heart::after {
+  left: -8px;
+  top: 0;
+}
+
+.celeb-heart:nth-child(1) { left: 15%; bottom: 10%; animation-delay: 0s; }
+.celeb-heart:nth-child(2) { left: 45%; bottom: 5%; animation-delay: 0.5s; }
+.celeb-heart:nth-child(3) { left: 75%; bottom: 15%; animation-delay: 1s; }
+.celeb-heart:nth-child(4) { left: 25%; bottom: 25%; animation-delay: 0.25s; }
+.celeb-heart:nth-child(5) { left: 65%; bottom: 20%; animation-delay: 0.75s; }
+
+@keyframes celebFloat {
+  0%, 100% {
+    transform: rotate(-45deg) translateY(0) scale(1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: rotate(-45deg) translateY(-20px) scale(1.1);
+    opacity: 1;
+  }
+}
+
+/* Responsive: mobile */
+@media (max-width: 600px) {
+  .envelope-wrapper {
+    min-height: 240px;
+    padding-top: 1rem;
+  }
+
+  .tap-hint {
+    margin-bottom: 0.75rem;
+  }
+
+  .card-question .buttons,
+  .card-no .buttons {
+    flex-direction: column;
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .card-question .buttons .btn,
+  .card-no .buttons .btn {
+    width: 100%;
+  }
+
+  .card-yes .dance-gif {
+    max-height: 45vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 0.75rem;
+  }
+
+  .envelope {
+    max-width: 320px;
+  }
+
+  .envelope .flap .seal {
+    width: 24px;
+    height: 24px;
+    font-size: 12px;
+  }
+
+  .card-question .question {
+    margin-bottom: 1rem;
+  }
+}
